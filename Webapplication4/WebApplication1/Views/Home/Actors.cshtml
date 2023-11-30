@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Actors";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2>Search for Actor Videos</h2>
+
+<form action="/Home/Actors" method="get">
+    <label for="nconst">NCONST:</label>
+    <input type="text" id="nconst" name="nconst" value="nm0000151" required>
+    <input type="submit" value="Search">
+</form>
+
+<div id="actorsContainer"></div>
+
+@if (ViewBag.ActorData != null)
+{
+    <pre>@Html.Raw(ViewBag.ActorData)</pre>
+
+
+    <script type="text/javascript">
+        // Ensure the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            var jsonData = @Html.Raw(ViewBag.ActorData);
+            var actorData = jsonData.data; // Access the 'data' key of your JSON
+
+            // Function to create HTML for each actor
+            function createActorHtml(actor) {
+                return '<div class="actor">' +
+                    '<h3>' + actor.title + '</h3>' +
+                    '<p>ID: ' + actor.id + '</p>' +
+                    '<p><img src="' + actor.image + '" alt="Actor Image"></p>' +
+                    '<p><a href="' + actor.video + '">Watch Video</a></p>' +
+                    '</div>';
+            }
+
+            // Rendering the data
+            function renderActors(data) {
+                var actorsContainer = document.getElementById('actorsContainer');
+                data.forEach(function (actor) {
+                    actorsContainer.innerHTML += createActorHtml(actor);
+                });
+            }
+
+            // Call render function
+            renderActors(actorData);
+        });
+    </script>
+}
+else
+{
+    <p>No Rating data available.</p>
+}
+
+
