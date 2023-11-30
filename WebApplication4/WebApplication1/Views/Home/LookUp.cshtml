@@ -1,0 +1,38 @@
+﻿@using Newtonsoft.Json
+@using System.Web.Mvc.Html
+@{
+    ViewBag.Title = "LookUp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+<br />
+<br />
+
+<h2>LookUp(Default : Chicago)</h2>
+<p>
+    @using (Html.BeginForm("LookUp", "Home", FormMethod.Get))
+    {
+        <label for="moviekw">Enter Movie Keyword:</label>
+        <input type="text" name="id" id="moviekw" />
+        <input type="submit" value="Movie/TV Shows" />
+    }
+
+</p>
+
+@if (!string.IsNullOrEmpty(ViewBag.LookUpData as string))
+{
+    <pre>@Html.Raw(ViewBag.LookUpData)</pre>
+
+    
+
+
+
+
+
+}
+else
+{
+    <p>No Rating data available.</p>
+}

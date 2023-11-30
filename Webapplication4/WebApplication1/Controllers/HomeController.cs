@@ -101,7 +101,7 @@ namespace WebApplication1.Controllers
             {
 
 
-            var movieId = string.IsNullOrEmpty(id) ? "defaultMovieId" : id;
+            var movieId = string.IsNullOrEmpty(id) ? "Chicago" : id;
 
             var client = new HttpClient();
                 var request = new HttpRequestMessage
@@ -196,6 +196,42 @@ namespace WebApplication1.Controllers
                 return View("Error"); // Ensure you have an Error view
             }
         }
+
+
+        public async Task<ActionResult> LookUp(string kw = "Chicago")
+        {
+            var moviekw = string.IsNullOrEmpty(kw) ? "Chicago" : kw;
+
+            var client = new HttpClient();
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup?term={moviekw}"),
+                Headers =
+        {
+            { "X-RapidAPI-Key", "f45a75ea1cmsh0dd1751d526138fp1f1ac1jsn1b2f727d5f7a" },
+            { "X-RapidAPI-Host", "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com" },
+        },
+            };
+
+            try
+            {
+                using (var response = await client.SendAsync(request))
+                {
+                    response.EnsureSuccessStatusCode();
+                    var body = await response.Content.ReadAsStringAsync();
+                    ViewBag.LookUpData = body;
+                    return View("LookUp");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions (log the error, return an error view, etc.)
+                ViewBag.ErrorMessage = $"Failed to load LookUp data. Error: {ex.Message}";
+                return View("Error");
+            }
+        }
+
 
 
 
