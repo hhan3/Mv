@@ -1,0 +1,88 @@
+﻿
+
+@using Newtonsoft.Json
+@using System.Web.Mvc.Html
+@{
+    ViewBag.Title = "Chat With Our AI Assistant";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+
+
+<style>
+    .gpt-message {
+        text-align: left;
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif; /* Update this line with your chosen font */
+    }
+
+</style>
+
+<h1>@ViewBag.Title</h1>
+<div id="conversation" class="conversation-container"></div>
+<input type="text" id="userInput" placeholder="Type your message here...">
+<button id="sendMessage">Send</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log("Script loaded");
+            const inputField = document.getElementById('userInput');
+            const sendButton = document.getElementById('sendMessage');
+
+            sendButton.addEventListener('click', sendMessage);
+            inputField.addEventListener('keypress', function(e) {
+                if (e.keyCode === 13) { // Enter key
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            function sendMessage() {
+                const message = inputField.value.trim();
+                inputField.value = '';
+
+                if (message) {
+                    updateConversation('user', message);
+                    sendMessageToGPT4(message);
+                }
+            }
+
+            function sendMessageToGPT4(message) {
+                fetch('@Url.Action("SendMessageToGPT4", "Home")', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.result) {
+                        updateConversation('gpt', data.result);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    updateConversation('error', 'Failed to get response');
+                });
+            }
+
+            function updateConversation(sender, message) {
+                const conversationDiv = document.getElementById('conversation');
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                messageDiv.classList.add(sender === 'user' ? 'user-message' : 'gpt-message');
+                messageDiv.textContent = message;
+                conversationDiv.appendChild(messageDiv);
+                conversationDiv.scrollTop = conversationDiv.scrollHeight;
+            }
+        });
+</script>

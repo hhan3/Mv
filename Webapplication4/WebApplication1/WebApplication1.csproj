@@ -336,6 +336,7 @@
     <Content Include="Views\Home\Top100.cshtml" />
     <Content Include="Views\Home\LookUp.cshtml" />
     <Content Include="Views\Home\TestPushView.cshtml" />
+    <Content Include="Views\Home\ChatWithGpt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
