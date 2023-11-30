@@ -1,0 +1,54 @@
+﻿
+
+
+@{
+    ViewBag.Title = "Coupon Api";
+
+}
+
+<link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
+<header class="help-page">
+    <div class="content-wrapper">
+        <div class="float-left">
+            <br>
+            <br>
+            <br>
+            <h1>@ViewBag.Title</h1>
+        </div>
+    </div>
+</header>
+<div id="body" class="help-page">
+    <video autoplay muted loop id="background-video">
+        <source src="~/Areas/HelpPage/r.mp4" type="video/mp4">
+
+    </video>
+
+    <section class="featured">
+        <div class="content-wrapper" style="padding-top: 50px;">
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            @if (ViewBag.CouponData != null)
+            {
+                <pre>@ViewBag.CouponData</pre> @* Displaying raw data. Format as needed. *@
+            }
+            else
+            {
+                <p>No data available.</p>
+            }
+
+
+        </div>
+    </section>
+
+
+</div>
+
+
+
+
+

@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Coupons";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2>Coupons</h2>
+<p>
+    Welcome !
+</p>
+
+@if (ViewBag.CouponData != null)
+{
+    <pre>@Html.Raw(ViewBag.CouponData)</pre>
+
+    <div id="couponsContainer"></div>
+
+    <script type="text/javascript">
+        // Parse the JSON data
+        var rawData = @Html.Raw(ViewBag.CouponData);
+        var couponData = rawData.data; // Access the 'data' array
+        var container = document.getElementById("couponsContainer");
+
+        // Check if couponData is an array and has elements
+        if(Array.isArray(couponData) && couponData.length) {
+            couponData.forEach(function(coupon) {
+                // Create a div element for each coupon
+                var elem = document.createElement("div");
+                elem.className = "coupon";
+
+                // Assuming each coupon has 'title', 'description', 'code', and 'url'
+                elem.innerHTML = "<h3>" + coupon.title + "</h3>" +
+                                 "<p>" + coupon.description + "</p>" +
+                                 "<p>Code: <strong>" + coupon.code + "</strong></p>" +
+                                 "<a href='" + coupon.url + "' target='_blank'>Visit Store</a>";
+
+                container.appendChild(elem);
+            });
+        } else {
+            container.innerHTML = "<p>No coupon data available.</p>";
+        }
+    </script>
+
+
+
+
+
+
+}
+else
+{
+    <p>No coupon data available.</p>
+}
