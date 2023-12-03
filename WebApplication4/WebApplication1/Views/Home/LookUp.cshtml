@@ -12,14 +12,16 @@
 <br />
 <br />
 
-<h2>LookUp(Default : Chicago)</h2>
+<h2>LookUp(Default : GodFather)</h2>
 <p>
     @using (Html.BeginForm("LookUp", "Home", FormMethod.Get))
     {
         <label for="moviekw">Enter Movie Keyword:</label>
-        <input type="text" name="id" id="moviekw" />
+        <input type="text" name="term" id="moviekw" />
         <input type="submit" value="Movie/TV Shows" />
     }
+
+
 
 </p>
 
@@ -28,7 +30,43 @@
     <pre>@Html.Raw(ViewBag.LookUpData)</pre>
 
 
+    var lookUpData = JsonConvert.DeserializeObject<dynamic>(ViewBag.LookUpData);
+    <div>
+        <h3>Search Result:</h3>
+        <p><strong>Search by:</strong> @lookUpData.term</p>
+    </div>
 
+    <div>
+        @foreach (var result in lookUpData.results)
+        {
+            <div style="margin-bottom: 20px;">
+                <h4>@result.name</h4>
+                @if (result.picture != null)
+                {
+                    <img src="@result.picture" alt="@result.name" style="width: 100%;">
+                }
+
+             
+
+
+              
+              
+
+                <p>IDs:</p>
+                <ul>
+                    @if (result.external_ids.imdb != null)
+                    {
+                        <li>IMDB: <a href="@result.external_ids.imdb.url">@result.external_ids.imdb.id</a></li>
+                    }
+                    @if (result.external_ids.tmdb != null)
+                    {
+                        <li>TMDb: @result.external_ids.tmdb.id</li>
+                    }
+                 
+                </ul>
+            </div>
+        }
+    </div>
 
 
 
@@ -36,5 +74,5 @@
 }
 else
 {
-    <p>No Rating data available.</p>
+    <p>No  data available.</p>
 }

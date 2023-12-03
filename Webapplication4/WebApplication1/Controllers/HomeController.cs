@@ -7,6 +7,7 @@ using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.Text;
+using WebApplication1.Models;
 
 
 
@@ -32,15 +33,9 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-        public ActionResult Genre()
-        {
-            return View();
-        }
+     
 
-        public ActionResult Directors()
-        {
-            return View();
-        }
+      
 
         public ActionResult Review()
         {
@@ -107,7 +102,7 @@ namespace WebApplication1.Controllers
         {
 
 
-            var movieId = string.IsNullOrEmpty(id) ? "Chicago" : id;
+            var movieId = string.IsNullOrEmpty(id) ? "tt0110912" : id;
 
             var client = new HttpClient();
             var request = new HttpRequestMessage
@@ -140,6 +135,12 @@ namespace WebApplication1.Controllers
                 return View("Error");
             }
         }
+
+
+
+
+
+
 
         public async Task<ActionResult> Actors(string nconst = "nm0000151")
         {
@@ -204,15 +205,16 @@ namespace WebApplication1.Controllers
         }
 
 
-        public async Task<ActionResult> LookUp(string kw = "Chicago")
+
+        public async Task<ActionResult> LookUp(string term, string country = "us")
         {
-            var moviekw = string.IsNullOrEmpty(kw) ? "Chicago" : kw;
+            var searchTerm = string.IsNullOrEmpty(term) ? "Godfather" : term; // Use a default term if none is provided
 
             var client = new HttpClient();
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup?term={moviekw}"),
+                RequestUri = new Uri($"https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup?term={searchTerm}&country={country}"),
                 Headers =
         {
             { "X-RapidAPI-Key", "f45a75ea1cmsh0dd1751d526138fp1f1ac1jsn1b2f727d5f7a" },
@@ -227,16 +229,20 @@ namespace WebApplication1.Controllers
                     response.EnsureSuccessStatusCode();
                     var body = await response.Content.ReadAsStringAsync();
                     ViewBag.LookUpData = body;
-                    return View("LookUp");
+                    return View("LookUp"); // Make sure you have a LookUp view
                 }
             }
             catch (Exception ex)
             {
-                // Handle exceptions (log the error, return an error view, etc.)
                 ViewBag.ErrorMessage = $"Failed to load LookUp data. Error: {ex.Message}";
                 return View("Error");
             }
         }
+
+
+
+
+
 
         public ActionResult ChatWithGPT()
         {
@@ -281,6 +287,85 @@ namespace WebApplication1.Controllers
             }
         }
 
+
+        public async Task<ActionResult> Genre(string id)
+        {
+
+
+            var movieId = string.IsNullOrEmpty(id) ? "tt0111161" : id;
+
+            var client = new HttpClient();
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://movies-ratings2.p.rapidapi.com/ratings?id={movieId}"),
+                Headers =
+                {
+                    { "X-RapidAPI-Key", "f45a75ea1cmsh0dd1751d526138fp1f1ac1jsn1b2f727d5f7a" },
+                    { "X-RapidAPI-Host", "movies-ratings2.p.rapidapi.com" },
+
+
+                },
+            };
+
+            try
+            {
+                using (var response = await client.SendAsync(request))
+                {
+                    response.EnsureSuccessStatusCode();
+                    var body = await response.Content.ReadAsStringAsync();
+                    ViewBag.GenreData = body;
+                    return View("");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions (log the error, return an error view, etc.)
+                ViewBag.ErrorMessage = "Failed to load Genre data. Please try again later.";
+                return View("Error");
+            }
+        }
+
+
+
+
+        public async Task<ActionResult> Directors(string id)
+        {
+
+
+            var movieId = string.IsNullOrEmpty(id) ? "tt0109830" : id;
+
+            var client = new HttpClient();
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://movies-ratings2.p.rapidapi.com/ratings?id={movieId}"),
+                Headers =
+                {
+                    { "X-RapidAPI-Key", "f45a75ea1cmsh0dd1751d526138fp1f1ac1jsn1b2f727d5f7a" },
+                    { "X-RapidAPI-Host", "movies-ratings2.p.rapidapi.com" },
+
+
+                },
+            };
+
+            try
+            {
+                using (var response = await client.SendAsync(request))
+                {
+                    response.EnsureSuccessStatusCode();
+                    var body = await response.Content.ReadAsStringAsync();
+                    ViewBag.DirectorsData = body;
+                    return View("");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions (log the error, return an error view, etc.)
+                ViewBag.ErrorMessage = "Failed to load Directors data. Please try again later.";
+                return View("Error");
+            }
+        }
 
 
 

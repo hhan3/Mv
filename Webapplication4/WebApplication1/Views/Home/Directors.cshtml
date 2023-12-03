@@ -1,13 +1,56 @@
-﻿@{
+﻿
+
+@using Newtonsoft.Json
+@using System.Web.Mvc.Html
+@{
     ViewBag.Title = "Directors";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<br />
+<br />
 
-
-<h2>Directors</h2>
+<h2>Directors(Default Movie: Her)</h2>
 <p>
-    Welcome !
-
+    @using (Html.BeginForm("Directors", "Home", FormMethod.Get))
+    {
+        <label for="movieId">Enter Movie ID:</label>
+        <input type="text" name="id" id="movieId" />
+        <input type="submit" value="Get Production Related Info" />
+    }
 
 </p>
+
+@if (!string.IsNullOrEmpty(ViewBag.DirectorsData as string))
+{
+
+    <pre>@Html.Raw(ViewBag.DirectorsData)</pre>
+
+    var directorsData = JsonConvert.DeserializeObject<dynamic>(ViewBag.DirectorsData);
+<div>
+    <h3>Basic Information:</h3>
+    <p><strong>Movie Title:</strong> @directorsData.media.title</p>
+    <p><strong>Movie Homepage:</strong> <a href="@directorsData.media.homepage">Click Here</a></p>
+
+    <p><strong>TMDB ID:</strong> @directorsData.tmdbId, <a href="@directorsData.ratings.imdb.url">IMDB Link</a></p>
+    <p><strong>IMDB ID:</strong> @directorsData.imdbId, <a href="@directorsData.ratings.rotten_tomatoes.url">Rotten Tomatoes Link</a></p>
+
+    <p><strong>Director:</strong> @directorsData.media.director</p>
+    <p><strong>Budget:</strong> @directorsData.media.budget</p>
+    <p><strong>Revenue:</strong> @directorsData.media.revenue</p>
+
+
+</div>
+
+    <div>
+
+
+        <img src="@($"https://image.tmdb.org/t/p/original/{directorsData.media.backdrop_path}")" alt="Movie Image" style="max-width: 100%; height: auto;">
+
+    </div>
+
+}
+else
+{
+    <p>No Directors data available.</p>
+}

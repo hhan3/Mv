@@ -8,6 +8,10 @@
 <br />
 <br />
 
+<br />
+<br />
+
+
 <h2>Rating(Default Movie: Her)</h2>
 <p>
     @using (Html.BeginForm("Rating", "Home", FormMethod.Get))
@@ -23,27 +27,27 @@
 {
     //var ratingData = ViewBag.RatingData; // Assuming ratingData is dynamic or a specific class type
     var ratingData = JsonConvert.DeserializeObject<dynamic>(ViewBag.RatingData);
-<div>
-    <h3>Basic Information:</h3>
-    <p><strong>Movie Title:</strong> @ratingData.media.title</p>
-    <p><strong>Movie Homepage:</strong> <a href="@ratingData.media.homepage">Click Here</a></p>
-
-    <p><strong>TMDB ID:</strong> @ratingData.tmdbId</p>
-    <p><strong>IMDB ID:</strong> @ratingData.imdbId</p>
-
-</div>
-
     <div>
-        <h3>Ratings:</h3>
-        <p><strong>IMDB:</strong> Score - @ratingData.ratings.imdb.score, Reviews Count - @ratingData.ratings.imdb.reviewsCount, <a href="@ratingData.ratings.imdb.url">IMDB Link</a></p>
+        <h3>Basic Information:</h3>
+        <p><strong>Movie Title:</strong> @ratingData.media.title</p>
+        <p><strong>Movie Homepage:</strong> <a href="@ratingData.media.homepage">Click Here</a></p>
 
-
-        <p><strong>Rotten Tomatoes:</strong> Tomatometer - @ratingData.ratings.rotten_tomatoes.tomatometer, Audience Score - @ratingData.ratings.rotten_tomatoes.audienceScore, Average Score - @ratingData.ratings.rotten_tomatoes.averageScore, <a href="@ratingData.ratings.rotten_tomatoes.url">Rotten Tomatoes Link</a></p>
+        <p><strong>TMDB ID:</strong> @ratingData.tmdbId,<a href="@ratingData.ratings.imdb.url">IMDB Link</a></p>
+        <p><strong>IMDB ID:</strong> @ratingData.imdbId, <a href="@ratingData.ratings.rotten_tomatoes.url">Rotten Tomatoes Link</a></p>
 
     </div>
 
-  
-    
+    <div>
+        <h3>Ratings:</h3>
+        <p><strong>IMDB:</strong> Score - @ratingData.ratings.imdb.score, Reviews Count - @ratingData.ratings.imdb.reviewsCount</p>
+
+
+        <p><strong>Rotten Tomatoes:</strong> Tomatometer - @ratingData.ratings.rotten_tomatoes.tomatometer, Audience Score - @ratingData.ratings.rotten_tomatoes.audienceScore, Average Score - @ratingData.ratings.rotten_tomatoes.averageScore</p>
+
+    </div>
+
+
+
 
 
 }

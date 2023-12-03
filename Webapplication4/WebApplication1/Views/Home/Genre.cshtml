@@ -1,11 +1,80 @@
-﻿@{
+﻿
+
+@using Newtonsoft.Json
+@using System.Web.Mvc.Html
+@{
     ViewBag.Title = "Genre";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<br />
+<br />
 
-
-<h2>Genre</h2>
+<h2>Genre(Default Movie: Her)</h2>
 <p>
-    Welcome !
+    @using (Html.BeginForm("Genre", "Home", FormMethod.Get))
+    {
+        <label for="movieId">Enter Movie ID:</label>
+        <input type="text" name="id" id="movieId" />
+        <input type="submit" value="Get Genre Related Info" />
+    }
+
 </p>
+
+@if (!string.IsNullOrEmpty(ViewBag.GenreData as string))
+{
+
+    <pre>@Html.Raw(ViewBag.GenreData)</pre>
+
+    var genreData = JsonConvert.DeserializeObject<dynamic>(ViewBag.GenreData);
+<div>
+    <h3>Basic Information:</h3>
+    <p><strong>Movie Title:</strong> @genreData.media.title</p>
+    <p><strong>Movie Homepage:</strong> <a href="@genreData.media.homepage">Click Here</a></p>
+
+    <p><strong>TMDB ID:</strong> @genreData.tmdbId, <a href="@genreData.ratings.imdb.url">IMDB Link</a></p>
+    <p><strong>IMDB ID:</strong> @genreData.imdbId, <a href="@genreData.ratings.rotten_tomatoes.url">Rotten Tomatoes Link</a></p>
+    <h3>Description</h3>
+    <p>@genreData.media.overview</p>
+
+</div>
+
+<div>
+
+    <p><strong>Genre: @genreData.media.genres</strong></p>
+    <img src="@($"https://image.tmdb.org/t/p/original/{genreData.media.backdrop_path}")" alt="Movie Image" style="max-width: 100%; height: auto;">
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+else
+{
+    <p>No Rating data available.</p>
+}
+
+
+
+
