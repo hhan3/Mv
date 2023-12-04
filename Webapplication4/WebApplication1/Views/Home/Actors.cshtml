@@ -12,10 +12,10 @@
 </br>
 </br>
 
-<h2>Search for Actor Videos</h2>
+<h2>Search for Actor's Films</h2>
 
 <form action="/Home/Actors" method="get">
-    <label for="nconst">NCONST:</label>
+    <label for="nconst">Input Actor Id From IMDB:</label>
     <input type="text" id="nconst" name="nconst" value="nm0000151" required>
     <input type="submit" value="Search">
 </form>
@@ -37,8 +37,8 @@
             function createActorHtml(actor) {
                 return '<div class="actor">' +
                     '<h3>' + actor.title + '</h3>' +
-                    '<p>ID: ' + actor.id + '</p>' +
-                    '<p><img src="' + actor.image + '" alt="Actor Image"></p>' +
+                  
+                    '<p><img src="' + actor.image + '" alt="Actor Image" style="width: 100%;"> </p>' +
                     '<p><a href="' + actor.video + '">Watch Video</a></p>' +
                     '</div>';
             }
