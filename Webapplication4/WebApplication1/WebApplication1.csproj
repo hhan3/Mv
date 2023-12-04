@@ -321,7 +321,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Scripts\knockout.validation.min.js.map" />
-    <Content Include="Views\Shared\About.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Shorts.cshtml" />
     <Content Include="Views\Home\Actors.cshtml" />
@@ -330,8 +329,6 @@
     <Content Include="Views\Home\Genre.cshtml" />
     <Content Include="Views\Home\Review.cshtml" />
     <Content Include="Views\Home\Coupons.cshtml" />
-    <Content Include="Views\Shared\Contact.cshtml" />
-    <Content Include="Views\Manage\Contact.cshtml" />
     <Content Include="Views\Account\Contact.cshtml" />
     <Content Include="Views\Home\Top100.cshtml" />
     <Content Include="Views\Home\LookUp.cshtml" />
