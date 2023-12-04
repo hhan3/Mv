@@ -1,11 +1,60 @@
-﻿@{
-    ViewBag.Title = "Genre";
+﻿@using Newtonsoft.Json
+@using System.Web.Mvc.Html
+@{
+    ViewBag.Title = "Rating";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<br />
+<br />
+
+<br />
+<br />
 
 
-<h2>Genre</h2>
+<h2>Review</h2>
 <p>
-    Welcome !
+    @using (Html.BeginForm("Review", "Home", FormMethod.Get))
+    {
+        <label for="movieId">Enter Movie ID:</label>
+        <input type="text" name="id" id="movieId" />
+        <input type="submit" value="Get Review" />
+    }
+
 </p>
+
+@if (!string.IsNullOrEmpty(ViewBag.ReviewData as string))
+{
+    //var ratingData = ViewBag.RatingData; // Assuming ratingData is dynamic or a specific class type
+    var reviewData = JsonConvert.DeserializeObject<dynamic>(ViewBag.ReviewData);
+    <div>
+        <h3>Basic Information:</h3>
+        <p><strong>Movie Title:</strong> @reviewData.media.title</p>
+        <p><strong>Movie Homepage:</strong> <a href="@reviewData.media.homepage">Click Here</a></p>
+
+        <p><strong>TMDB ID:</strong> @reviewData.tmdbId,<a href="@reviewData.ratings.imdb.url">IMDB Link</a></p>
+        <p><strong>IMDB ID:</strong> @reviewData.imdbId, <a href="@reviewData.ratings.rotten_tomatoes.url">Rotten Tomatoes Link</a></p>
+
+    </div>
+
+    <div>
+        <h3>Review:</h3>
+        <p>Poularity:@reviewData.media.popularity</p>
+        <p>Fiml Tag: @reviewData.media.tagline</p>
+
+      
+
+
+
+
+        <img src="@($"https://image.tmdb.org/t/p/original/{reviewData.media.backdrop_path}")" alt="Movie Image" style="max-width: 100%; height: auto;">
+
+
+    </div>
+
+}
+else
+{
+    <p>No Review data available.</p>
+}
+

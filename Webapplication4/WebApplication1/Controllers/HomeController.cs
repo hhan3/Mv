@@ -37,10 +37,7 @@ namespace WebApplication1.Controllers
 
       
 
-        public ActionResult Review()
-        {
-            return View();
-        }
+     
 
         /*
 
@@ -113,8 +110,6 @@ namespace WebApplication1.Controllers
                 {
                     { "X-RapidAPI-Key", "f45a75ea1cmsh0dd1751d526138fp1f1ac1jsn1b2f727d5f7a" },
                     { "X-RapidAPI-Host", "movies-ratings2.p.rapidapi.com" },
-
-
                 },
             };
 
@@ -367,6 +362,42 @@ namespace WebApplication1.Controllers
             }
         }
 
+
+        public async Task<ActionResult> Review(string id)
+        {
+
+
+            var movieId = string.IsNullOrEmpty(id) ? "tt0050083" : id;
+
+            var client = new HttpClient();
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://movies-ratings2.p.rapidapi.com/ratings?id={movieId}"),
+                Headers =
+                {
+                    { "X-RapidAPI-Key", "f45a75ea1cmsh0dd1751d526138fp1f1ac1jsn1b2f727d5f7a" },
+                    { "X-RapidAPI-Host", "movies-ratings2.p.rapidapi.com" },
+                },
+            };
+
+            try
+            {
+                using (var response = await client.SendAsync(request))
+                {
+                    response.EnsureSuccessStatusCode();
+                    var body = await response.Content.ReadAsStringAsync();
+                    ViewBag.ReviewData = body;
+                    return View("Review");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions (log the error, return an error view, etc.)
+                ViewBag.ErrorMessage = "Failed to load Review data. Please try again later.";
+                return View("Error");
+            }
+        }
 
 
 
