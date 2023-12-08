@@ -9,7 +9,10 @@
 
 <br />
 <br />
-
+<br />
+<br />
+<br />
+<br />
 <h2>Directors(Default Movie: Her)</h2>
 <p>
     @using (Html.BeginForm("Directors", "Home", FormMethod.Get))
@@ -24,23 +27,23 @@
 @if (!string.IsNullOrEmpty(ViewBag.DirectorsData as string))
 {
 
-    <pre>@Html.Raw(ViewBag.DirectorsData)</pre>
+
 
     var directorsData = JsonConvert.DeserializeObject<dynamic>(ViewBag.DirectorsData);
-<div>
-    <h3>Basic Information:</h3>
-    <p><strong>Movie Title:</strong> @directorsData.media.title</p>
-    <p><strong>Movie Homepage:</strong> <a href="@directorsData.media.homepage">Click Here</a></p>
+    <div>
+        <h3>Basic Information:</h3>
+        <p><strong>Movie Title:</strong> @directorsData.media.title</p>
+        <p><strong>Movie Homepage:</strong> <a href="@directorsData.media.homepage">Click Here</a></p>
 
-    <p><strong>TMDB ID:</strong> @directorsData.tmdbId, <a href="@directorsData.ratings.imdb.url">IMDB Link</a></p>
-    <p><strong>IMDB ID:</strong> @directorsData.imdbId, <a href="@directorsData.ratings.rotten_tomatoes.url">Rotten Tomatoes Link</a></p>
+        <p><strong>TMDB ID:</strong> @directorsData.tmdbId, <a href="@directorsData.ratings.imdb.url">IMDB Link</a></p>
+        <p><strong>IMDB ID:</strong> @directorsData.imdbId, <a href="@directorsData.ratings.rotten_tomatoes.url">Rotten Tomatoes Link</a></p>
 
-    <p><strong>Director:</strong> @directorsData.media.director</p>
-    <p><strong>Budget:</strong> @directorsData.media.budget</p>
-    <p><strong>Revenue:</strong> @directorsData.media.revenue</p>
+        <p><strong>Director:</strong> @directorsData.media.director</p>
+        <p><strong>Budget:</strong> @directorsData.media.budget</p>
+        <p><strong>Revenue:</strong> @directorsData.media.revenue</p>
 
 
-</div>
+    </div>
 
     <div>
 
@@ -51,6 +54,6 @@
 
 }
 else
-{
+{ <pre>@Html.Raw(ViewBag.DirectorsData)</pre>
     <p>No Directors data available.</p>
 }

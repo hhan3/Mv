@@ -27,7 +27,7 @@
 
 @if (!string.IsNullOrEmpty(ViewBag.LookUpData as string))
 {
-    <pre>@Html.Raw(ViewBag.LookUpData)</pre>
+    
 
 
     var lookUpData = JsonConvert.DeserializeObject<dynamic>(ViewBag.LookUpData);
@@ -46,11 +46,6 @@
                     <img src="@result.picture" alt="@result.name" style="width: 100%;">
                 }
 
-             
-
-
-              
-              
 
                 <p>IDs:</p>
                 <ul>
@@ -73,6 +68,6 @@
 
 }
 else
-{
+{   <pre>@Html.Raw(ViewBag.LookUpData)</pre>
     <p>No  data available.</p>
 }

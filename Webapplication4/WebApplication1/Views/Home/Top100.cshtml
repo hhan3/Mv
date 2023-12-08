@@ -5,15 +5,18 @@
 <br />
 <br />
 <br />
+<br />
+<br />
+<br />
 <h2>Top 100 films worldwide</h2>
 
 
 
 @if (ViewBag.Top100Data != null)
 {
-<pre>@Html.Raw(ViewBag.Top100Data)</pre>
 
-    <h2>Top 100 films worldwide</h2>
+
+   
     <div id="allMoviesList"></div>
 
     <script>
@@ -30,9 +33,9 @@
                     output += "<p>" + movie.description + "</p>";
                     output += "<p>Genre: " + movie.genre.join(", ") + "</p>";
                     output += "<p>Rating: " + movie.rating + "</p>";
-                   
+
                     output += "<img src='" + movie.big_image + "' alt='" + movie.title + " Image' style='width: 100%; max-width: 600px; height: auto;'>";
-                 
+
 
 
                     output += "<a href='" + movie.imdb_link + "' target='_blank'>IMDb Link</a>";
@@ -54,7 +57,7 @@
 
 }
 else
-{
+{ <pre>@Html.Raw(ViewBag.Top100Data)</pre>
     <p>No Movie data available.</p>
 }
 
